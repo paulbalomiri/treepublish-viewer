@@ -1,0 +1,78 @@
+template(name='treepublish_view')
+  .row
+    h1
+      if env_name
+        | Schema : #{env_name} &nbsp;
+        #show-live.btn.btn-primary Show live schema
+      else
+        | Default schema(loaded from the live environment)
+  .row
+    .col-md-4
+      +render_collection collection_name=selected_collection reactive_environment=reactive_environment
+      +list_objects collection_name=selected_collection selected_id=selected_id environment=reactive_environment
+    .col-md-8
+      +collection_graph reactive_environment=reactive_environment collection_selector=selected_collection selected_id=selected_id reactive_environment=reactive_environment
+  
+template(name='collection_graph')
+  svg.link_graph.col-md-12(height="1500px")
+    g.output
+
+template(name="render_collection")
+  unless collection_name
+    h2 No Collection selected
+  else
+    h2 #{collection_name}
+    table.table 
+      thead
+        tr
+          th Link property
+          th Target Collection
+      tbody
+        each link_fields
+          tr
+            td #{link_field_name}
+            td 
+              if target_collection
+                | #{target_collection}
+              else
+                | 'Any collection'
+        else
+          tr
+            td No Link Fields
+template(name="list_objects")
+  with objects
+    h2 Objects in #{collection_name}
+    .row
+      #object-accordion.panel-group.col-md-6(role="tablist" aria-multiselectable="false")
+        each .
+          .panel.panel-default.object-panel
+            .panel-heading
+              h4.panel-title 
+                a(href="##{_id}" data-toggle="collapse" data-parent="#object-accordion") #{_id}
+                .btn.btn-default.publish-me 
+                  | published
+                  span.glyphicon(class=object_published_classes)
+            .panel-collapse.collapse(id="#{_id}" role="tabpanel" aria-labelledby="#{_id}")
+              .panel-body
+                with links
+                  table.table
+                    thead
+                      tr
+                        th Property
+                        th Links to collection
+                        th Target id
+                    tbody
+                      each .
+                        tr  
+                          td #{property_name}
+                          td #{target_collection}
+                          td #{target_link}
+                else
+                  | No Links in object definition
+  else
+    h2 Select a collection
+
+
+template(name='treetest')
+  h2 Treetest
+  #treetest

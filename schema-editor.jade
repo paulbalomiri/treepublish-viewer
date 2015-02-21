@@ -1,0 +1,86 @@
+
+template(name='treepublish_random_schema_generator')
+  if generating
+    h3 Generating...
+  else
+    form.well
+      h4 Generate random Schema
+      .form-group
+        label(for='#name') Generated Document name
+        input#name.form-control(type='text', value=name_default )
+      .form-group
+        label(for='#collection-count') Number of collections
+        input#collection-count.form-control(type='text', value=collection_count_default )
+      .form-group
+        label(for='#link-prob') Link probability
+        input#link-prob.form-control(type='text', value=link_prob_default )
+      .form-group
+        label(for='#link-cap') maximum links/collection
+        input#link-cap.form-control(type='text', value=link_cap_default)
+      .btn.btn-default.action.generate-new Generate new schema
+    with errors
+      each .
+        .bg-danger.text-danger
+          |#{text}
+template(name='treepublish_schema_editor')
+  unless ready
+    h1 Loading ...
+  else
+    .row 
+      .col-md-4.col-md-offset-2 
+        form.well.form-inline.col-md-12
+          
+          with doc_edit
+            h4 Template selection
+            .form-group  
+              //label(for='#doc-select') Documents stored:
+              .btn.btn-primary.doc-edit.load(class=load_classes) #{load_label}
+              select#doc-select.form-control
+                each schemas
+                  option(value="{{_id}}" $dyn=sel_opt_dyn_attr) #{name}
+              .btn.btn-warning.doc-edit.delete 
+                span.glyphicon.glyphicon-trash
+                |#{delete_label}
+            h4 
+              |Current Template: #{cur_doc_name} 
+              if modified
+                span.text-warning unsaved
+            .form-group
+              label(for="#cur-doc-name") Template name
+              input#cur-doc-name.form-control.doc-edit.name(value=cur_doc_name)
+              .btn-group
+                .btn.btn-primary.doc-edit.save(class=save_classes) Save
+                .btn.btn-default.doc-edit.save.new Save as New  
+            h4 Generate Package
+              +treepublish_zip_generator reactive_doc=reactive_doc
+            h4 Graph view
+              #show-graph.btn.btn-default Show in live graph
+          else
+            .bg-info
+              | No Schemas available for loading
+
+      .col-md-4
+        +treepublish_random_schema_generator doc_reactive_id=doc_reactive_id
+      .clearfix 
+    .col-md-12
+      +treepublish_schema_viewer reactive_doc=reactive_doc
+template(name='treepublish_schema_viewer')
+  unless id
+    .bg-warning
+      h3 Please select/generate a schema
+  else
+    with file_tab
+      .tabpanel#file-tab
+        ul.nav.nav-tabs
+          each .
+            li(role='presentation' class=file_tab_classes)
+              a(href="#" role="tab") #{name}
+    .well
+      with file_type_tab
+        .tabpanel#file-type-tab
+          ul.nav.nav-tabs
+            each .
+              li(role='presentation' class=file_type_tab_classes)
+                a(href="#" role="tab") #{name}
+      +CodeMirror id='schema-editor' name="schema-editor" options=editor_options reactiveVar='content_editor_text'
+

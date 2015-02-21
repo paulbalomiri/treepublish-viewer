@@ -1,0 +1,103 @@
+body {
+  font: 300 14px 'Helvetica Neue', Helvetica;
+}
+
+
+
+.edgePath path {
+  stroke: #333;
+  fill: #333;
+  stroke-width: 1.5px;
+}
+
+g.edgePath.possible-edge{
+  & > path {
+    stroke:gray;
+  };
+  & marker path {
+    fill:gray;
+    stroke:gray;
+  }
+
+}
+g.edgeLabel.possible-edge{
+  & text {
+    fill:gray;
+  }
+}
+
+g.edgePath{
+  &.highlight {
+    & marker path {
+      fill:red;
+      stroke:red;
+    }
+    & > .path{
+      stroke:red
+    }
+  }
+  &.edge-in-dep-set {
+    & marker path {
+      fill:blue;
+      stroke:blue;
+    }
+    & > .path{
+      stroke:blue
+    }
+  }
+
+}
+
+.publish-me span.glyphicon.viewed{
+  color:grey
+}
+
+
+
+
+g.node{
+  //stroke: #333;
+  text {
+    fill:#333
+  }
+  fill: #fff;
+  &.node-suppress{
+    //color:white;
+    & text{
+      fill: gray;
+    }
+  }
+  &.in-resultset {
+    & > rect{
+      fill:#CBD169;
+    }
+  }
+  &.node-primary-highlight{
+    & > rect {
+      stroke:red;
+      fill:yellow;
+    }
+    text {
+      stroke:red;
+      font-weight: bold;
+    }
+  }
+  &.node-secondary-highlight {
+    & > rect{
+      stroke: red
+    }
+    text {
+      //stroke:red
+    } 
+  }
+  &.in-resultset.node-primary-highlight {
+    & > rect{
+      fill:#edf391;
+    }
+  }
+
+}
+
+
+
+
