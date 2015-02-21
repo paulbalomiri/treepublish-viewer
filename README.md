@@ -1,5 +1,5 @@
 # treepublish-viewer
-package and default app for visualizing treepublish workings
+package and default app for visualizing [`pba:treepublish`](https://github.com/paulbalomiri/treepublish) workings
 
 This Package helps you create meaningful publish functions using the 
 [`pba:treepublish`](https://github.com/paulbalomiri/treepublish) package.
