@@ -1,0 +1,20 @@
+body
+  +simplepage
+template(name='simplepage')
+  +navbar menu=menu menuchoice=menuchoice
+  .container-fluid
+    +template
+
+template(name='navbar')
+  nav.navbar-default
+    .navbar-header
+      button.navbar-toggle.collapsed(type="button"  data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+    .collapse.navbar-collapse.bs-example-navbar-collapse-1
+      ul.nav.navbar-nav
+        each nav_list_link
+          li(class=list_entry_classes)
+            a.navbar-link(href="#" id=link_id) #{name}
