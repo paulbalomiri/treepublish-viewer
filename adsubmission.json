@@ -1,0 +1,221 @@
+{
+	"application": {
+		"title": "adsubmission",
+		"theme": "bootswatch-flatly",
+		"collections": [],
+		"queries": [
+			{
+				"name": "current_user_data",
+				"collection": "users",
+				"filter": {
+					"_id": "Meteor.userId()"
+				},
+				"find_one": true
+			}
+		],
+		"public_zone": {
+			"navbar_class": "navbar-inverse navbar-fixed-top",
+			"pages": [
+				{
+					"name": "home_public",
+					"components": [
+						{
+							"name": "home_jumbotron",
+							"title": "Example application",
+							"type": "jumbotron",
+							"text": "<b>This <a href=\"https://www.meteor.com\" target=\"_blank\">Meteor</a> application is made with <a href=\"http://www.meteorkitchen.com\" target=\"_blank\">meteor-kitchen</a> without manual coding.</b><br />It demonstrates how to create application with login, register and forgot password functions.<br />Source code (input file for generator) is <a href=\"https://github.com/perak/kitchen-examples/tree/master/example-accounts\" target=\"_blank\">here</a>.",
+							"button_title": "Continue &raquo;",
+							"button_route": "login"
+						}
+					],
+					"type": "page"
+				},
+				{
+					"name": "login",
+					"template": "login",
+					"type": "page"
+				},
+				{
+					"name": "register",
+					"template": "register",
+					"type": "page"
+				},
+				{
+					"name": "forgot_password",
+					"template": "forgot_password",
+					"type": "page"
+				},
+				{
+					"name": "reset_password",
+					"template": "reset_password",
+					"route_params": [
+						"resetPasswordToken"
+					],
+					"type": "page"
+				}
+			],
+			"components": [
+				{
+					"name": "left_menu",
+					"type": "menu",
+					"class": "nav navbar-nav",
+					"dest_selector": "#menu",
+					"items": [
+						{
+							"title": "Home",
+							"route": "home_public"
+						}
+					]
+				},
+				{
+					"name": "right_menu",
+					"type": "menu",
+					"class": "nav navbar-nav navbar-right",
+					"dest_selector": "#menu",
+					"items": [
+						{
+							"title": "Register",
+							"route": "register"
+						},
+						{
+							"title": "Login",
+							"route": "login"
+						}
+					]
+				}
+			],
+			"type": "zone"
+		},
+		"private_zone": {
+			"navbar_class": "navbar-default navbar-fixed-top",
+			"pages": [
+				{
+					"name": "home_private",
+					"title": "Welcome {{userFullName}}!",
+					"type": "page"
+				},
+				{
+					"name": "user_settings",
+					"pages": [
+						{
+							"name": "profile",
+							"components": [
+								{
+									"name": "edit_form",
+									"type": "form",
+									"mode": "update",
+									"title": "Edit your profile",
+									"submit_route": "user_settings.profile",
+									"query_name": "current_user_data",
+									"fields": [
+										{
+											"name": "profile.name",
+											"title": "Name",
+											"required": true,
+											"type": "string"
+										},
+										{
+											"name": "profile.email",
+											"title": "E-mail",
+											"type": "email",
+											"required": true
+										},
+										{
+											"name": "profile.facebook",
+											"title": "Facebook URL",
+											"type": "string"
+										},
+										{
+											"name": "profile.google",
+											"title": "Google+ URL",
+											"type": "string"
+										},
+										{
+											"name": "profile.twitter",
+											"title": "Twitter ID",
+											"type": "string"
+										},
+										{
+											"name": "profile.website",
+											"title": "Website URL",
+											"type": "string"
+										}
+									]
+								}
+							],
+							"type": "page"
+						},
+						{
+							"name": "change_pass",
+							"template": "change_pass",
+							"type": "page"
+						}
+					],
+					"components": [
+						{
+							"name": "side_menu",
+							"type": "menu",
+							"class": "nav nav-stacked nav-pills",
+							"items": [
+								{
+									"title": "Profile",
+									"route": "user_settings.profile"
+								},
+								{
+									"title": "Change password",
+									"route": "user_settings.change_pass"
+								}
+							]
+						}
+					],
+					"type": "page"
+				},
+				{
+					"name": "logout",
+					"template": "logout",
+					"type": "page"
+				}
+			],
+			"components": [
+				{
+					"name": "left_menu",
+					"type": "menu",
+					"class": "nav navbar-nav",
+					"dest_selector": "#menu",
+					"items": [
+						{
+							"title": "Home",
+							"route": "home_private"
+						}
+					]
+				},
+				{
+					"name": "right_menu",
+					"type": "menu",
+					"class": "nav navbar-nav navbar-right",
+					"dest_selector": "#menu",
+					"items": [
+						{
+							"title": "{{userEmail}}",
+							"items": [
+								{
+									"title": "Settings",
+									"route": "user_settings"
+								},
+								{
+									"title": "Logout",
+									"route": "logout"
+								}
+							]
+						}
+					]
+				}
+			],
+			"type": "zone"
+		},
+		"free_zone": {
+			"type": "zone"
+		},
+		"packages": {}
+	}
+}
